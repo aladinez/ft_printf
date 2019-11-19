@@ -6,20 +6,22 @@
 /*   By: aez-zaou <aez-zaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 21:25:33 by aez-zaou          #+#    #+#             */
-/*   Updated: 2019/11/17 15:15:57 by aez-zaou         ###   ########.fr       */
+/*   Updated: 2019/11/18 23:28:48 by aez-zaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-int		handle_string(t_info infos, va_list args)
+int		ft_string(t_info infos, va_list args)
 {
 	char	*str;
 	int		len;
 	char	*ptr;
 
-	len = ft_strcpy(&str, va_arg(args, char*));
-	if (infos.precision >= 0 && infos.precision < len)
+	len = ft_strcpy(&str, va_arg(args, char*),  0);
+	if (infos.precision == 0)
+		exception(&str);
+	else if (infos.precision > 0 && infos.precision < len)
 		str = ft_substr(str, 0, infos.precision);
 	if ((len = ft_strlen(str)) < infos.width)
 	{
@@ -35,7 +37,7 @@ int		handle_string(t_info infos, va_list args)
 	return (len);
 }
 
-int		ft_strcpy(char **dst, char *src)
+int		ft_strcpy(char **dst, char *src, int a)
 {
 	int i;
 
@@ -49,7 +51,8 @@ int		ft_strcpy(char **dst, char *src)
 		i++;
 	}
 	(*dst)[i] = 0;
-	free(src);
+	if (a)
+		free(src);
 	return (i);
 }
 
@@ -65,7 +68,7 @@ char	*ft_substr(char *s, int start, int len)
 		return (ft_calloc(1, 1));
 	if (ft_strlen(s + start) < len)
 		len = ft_strlen(s + start);
-	if ((str = (char*)malloc((len + 1) * sizeof(char))) == NULL || len == 0)
+	if ((str = (char*)malloc((len + 1) * sizeof(char))) == NULL)
 		return (ft_calloc(1, 1));
 	len += start;
 	while (start < len)

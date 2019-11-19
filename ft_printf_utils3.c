@@ -6,21 +6,24 @@
 /*   By: aez-zaou <aez-zaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 14:01:19 by aez-zaou          #+#    #+#             */
-/*   Updated: 2019/11/17 20:20:08 by aez-zaou         ###   ########.fr       */
+/*   Updated: 2019/11/19 01:48:35 by aez-zaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-int		handle_decimal(t_info infos, va_list args)
+int		ft_decimal(t_info infos, va_list args)
 {
 	char	*str;
 	char	*ptr;
 	int		len;
 
-	len = ft_strcpy(&str, ft_itoa(va_arg(args, int)));
+	len = ft_strcpy(&str, ft_itoa(va_arg(args, int)), 1);
 	if (*str == '0' && infos.precision == 0)
-		str[0] = '\0';
+	{
+		free(str);
+		str = ft_calloc(1,1);
+	}
 	if (infos.precision > 0 && infos.precision > len)
 	{
 		if (*str == '-')

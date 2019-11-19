@@ -6,7 +6,7 @@
 /*   By: aez-zaou <aez-zaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 14:58:11 by aez-zaou          #+#    #+#             */
-/*   Updated: 2019/11/16 16:18:17 by aez-zaou         ###   ########.fr       */
+/*   Updated: 2019/11/19 02:12:46 by aez-zaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,14 @@ int		handling(t_info infos, va_list args)
 
 	i = 0;
 	if (infos.conversion == 's')
-		i += handle_string(infos, args);
+		i += ft_string(infos, args);
+	if (infos.conversion == 'c')
+		i += ft_char(infos, args);
 	else if (infos.conversion == 'd' || infos.conversion == 'i')
-		i += handle_decimal(infos, args);
+		i += ft_decimal(infos, args);
+	else if (infos.conversion == 'p')
+		i += ft_adress(infos, args);
+	else if (infos.conversion == 'x' || infos.conversion == 'X')
+		i += ft_hexa(infos, args);
 	return (i);
 }
