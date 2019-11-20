@@ -6,7 +6,7 @@
 /*   By: aez-zaou <aez-zaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 02:41:54 by aez-zaou          #+#    #+#             */
-/*   Updated: 2019/11/20 03:38:42 by aez-zaou         ###   ########.fr       */
+/*   Updated: 2019/11/20 17:43:10 by aez-zaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int		get_info(const char *fmt, t_info *infos, va_list args)
 	int a;
 	int i;
 	int x;
-	// int y;/
 
 	i = 0;
 	a = 0;
@@ -56,11 +55,10 @@ int		get_info(const char *fmt, t_info *infos, va_list args)
 	if ((*fmt == '*') && (*fmt++) && ++i)
 	{
 		a = va_arg(args, int);
-		infos->sign = a > 0 ? 0 : 1;
-
+		if (a < 0 && infos->sign == 0)
+			infos->sign = 1;
 	}
-	infos->width = ft_abs(a);
-	
+	infos->width = a > 0 ? a : -a;
 	if ((*fmt == '.') && (*fmt++) && ++i)
 	{
 		a = 0;
@@ -69,22 +67,25 @@ int		get_info(const char *fmt, t_info *infos, va_list args)
 		if ((*fmt == '*') && (*fmt++) && ++i)
 			a = va_arg(args, int);
 		infos->precision = a;
-		// if (x)
-		// 	infos->point = 1;
 	}
 	else if (x && a != 0)
-	{
-		infos->point = 0;
-		infos->precision = infos->width;
-		infos->width = 0;
-		if(a < 0)
-		{
-			infos->width = infos->precision;
-			infos->precision = -1;
-		}
-	}
+		split_getinfo(&infos, a);
+	else
+		infos->point = 2;
 	infos->conversion = *fmt;
 	return (i);
+}
+
+void	split_getinfo(t_info **infos, int a)
+{
+	(*infos)->point = 0;
+	(*infos)->precision = (*infos)->width;
+	(*infos)->width = 0;
+	if (a < 0)
+	{
+		(*infos)->width = (*infos)->precision;
+		(*infos)->precision = -1;
+	}
 }
 
 void	initialise(t_info *infos)
@@ -94,26 +95,6 @@ void	initialise(t_info *infos)
 	infos->precision = -1;
 	infos->conversion = 0;
 	infos->point = -1;
-}
-
-char	*ft_calloc(size_t count, size_t size)
-{
-	void	*tab;
-	size_t	i;
-
-	i = 0;
-	if (size == 0)
-	{
-		if ((tab = malloc(1)) == NULL)
-			return (NULL);
-		ft_bzero(tab, 1);
-		return (tab);
-	}
-	tab = malloc(count * size);
-	if (tab == NULL)
-		return (NULL);
-	ft_bzero(tab, count * size);
-	return (tab);
 }
 
 void	ft_bzero(void *s, size_t n)

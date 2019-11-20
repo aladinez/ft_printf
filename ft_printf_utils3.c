@@ -6,36 +6,27 @@
 /*   By: aez-zaou <aez-zaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 14:01:19 by aez-zaou          #+#    #+#             */
-/*   Updated: 2019/11/20 03:46:52 by aez-zaou         ###   ########.fr       */
+/*   Updated: 2019/11/20 17:02:42 by aez-zaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-int		ft_decimal(t_info infos, va_list args)
+char	*ft_decimal(t_info infos, va_list args)
 {
 	char	*str;
-	char	*ptr;
 	int		len;
 
 	len = ft_strcpy(&str, ft_itoa((long long)va_arg(args, int)), 1);
 	if (*str == '0' && infos.precision == 0)
 	{
 		free(str);
-		str = ft_calloc(1,1);
+		str = ft_calloc(1, 1);
 	}
 	if (infos.precision > 0 && infos.precision >= len)
 	{
 		if (*str == '-')
-		{
-			ptr = ft_calloc(2, 1);
-			ptr[0] = '-';
-			str = ft_substr(str, 1, ft_strlen(str) - 1);
-			if (infos.point == 0)
-				len++;
-			str = ft_strjoin(ft_space(infos.precision - len + 2, '0'), str);
-			str = ft_strjoin(ptr, str);
-		}
+			ft_precision(infos, &str, len);
 		else
 			str = ft_strjoin(ft_space(infos.precision - len + 1, '0'), str);
 	}
@@ -46,10 +37,7 @@ int		ft_decimal(t_info infos, va_list args)
 		else
 			str = ft_strjoin(str, ft_space(infos.width - len + 1, ' '));
 	}
-	ft_putstr(str);
-	len = ft_strlen(str);
-	free(str);
-	return (len);
+	return (str);
 }
 
 void	fill(char *str, int dim, long long n)

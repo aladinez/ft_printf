@@ -6,7 +6,7 @@
 /*   By: aez-zaou <aez-zaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 22:28:24 by aez-zaou          #+#    #+#             */
-/*   Updated: 2019/11/19 02:21:08 by aez-zaou         ###   ########.fr       */
+/*   Updated: 2019/11/20 17:37:42 by aez-zaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,32 @@ int		main(void)
 	// ft_printf("\n");
 	// printf("%s|", ptr);
 	// free(ptr);
-	
+	// printf("== 0.7d == -100 == %0.7d\n", -100);
+	// ft_printf("== 0.7d == -100 == %0.7d\n\n", -100);
+	// printf("== 0.7d == 100  == %0.7d\n", 100);
+	// ft_printf("== 0.7d == 100  == %0.7d\n\n", 100);
+	// printf("== 07d == -100  == %07d\n", -100);
+	// ft_printf("== 07d == -100  == %07d\n\n", -100);
+	// printf("== 07d == 100   == %07d\n", 100);
+	// ft_printf("== 07d == 100   == %07d\n\n", 100);
+
+	// printf("1 = %d\n", printf("%c\n", 0));
+	// printf("2 = %d\n", ft_printf("%c\n", 0));
+
+	ft_printf("Bla bla %-*.5d\n", -10,  123);
+	printf("Bla bla %-*.5d|\n", -10, 123);
+
 	// ft_printf("%40p|123456", 123);
+	/*
 	printf("\n");
-	ft_printf("|%05c|", 'a');
-	printf("|%05c|", 'a'); //ce cas nne marche pas (ft_decimal line:22/23)
+	ft_printf("%2.7d", -100);
+	printf("\n");
+	printf("%2.7d", -100);
+	printf("\n");
+	ft_printf("%05d", -100);
+	printf("\n");
+	printf("%05d", -100);
+	*/
 	// printf("\n%d", i);
 
 	return (0);

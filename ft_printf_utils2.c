@@ -6,7 +6,7 @@
 /*   By: aez-zaou <aez-zaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 21:25:33 by aez-zaou          #+#    #+#             */
-/*   Updated: 2019/11/19 21:11:23 by aez-zaou         ###   ########.fr       */
+/*   Updated: 2019/11/20 16:54:38 by aez-zaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,11 @@ int		ft_string(t_info infos, va_list args)
 	int		len;
 	char	*ptr;
 
-	len = ft_strcpy(&str, va_arg(args, char*),  0);
+	len = ft_strcpy(&str, va_arg(args, char*), 0);
 	if (infos.precision == 0)
 	{
-		// exception(&str);
 		free(str);
-		str = ft_calloc(1,1);
+		str = ft_calloc(1, 1);
 	}
 	else if (infos.precision > 0 && infos.precision < len)
 		str = ft_substr(str, 0, infos.precision);
@@ -43,8 +42,8 @@ int		ft_string(t_info infos, va_list args)
 
 int		ft_strcpy(char **dst, char *src, int a)
 {
-	int i;
-	char *ptr;
+	int		i;
+	char	*ptr;
 
 	ptr = "(null)";
 	if (src == NULL)
@@ -56,7 +55,6 @@ int		ft_strcpy(char **dst, char *src, int a)
 	if (((*dst) = malloc(i * sizeof(char))) == NULL)
 		return (0);
 	i = 0;
-
 	while (src[i] != 0)
 	{
 		(*dst)[i] = src[i];

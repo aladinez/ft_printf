@@ -6,7 +6,7 @@
 /*   By: aez-zaou <aez-zaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 16:54:14 by aez-zaou          #+#    #+#             */
-/*   Updated: 2019/11/19 01:52:05 by aez-zaou         ###   ########.fr       */
+/*   Updated: 2019/11/20 17:43:33 by aez-zaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int		ft_adress(t_info infos, va_list args)
 	char	*ptr;
 	int		len;
 
-	str = ft_put_adress(va_arg(args, void*));
+	str = ft_put_adress(va_arg(args, void*), infos.point);
 	if ((len = ft_strlen(str)) < infos.width)
 	{
 		ptr = ft_space(infos.width - len + 1, ' ');
@@ -33,7 +33,7 @@ int		ft_adress(t_info infos, va_list args)
 	return (len);
 }
 
-char	*ft_put_adress(void *n)
+char	*ft_put_adress(void *n, int i)
 {
 	char			*str;
 	char			*ptr;
@@ -44,9 +44,14 @@ char	*ft_put_adress(void *n)
 	ptr[0] = '0';
 	ptr[1] = 'x';
 	ptr[2] = '\0';
-	num = (unsigned long)n;
-	str = ft_strjoin(ptr, ft_put_hexa(num, 0));
-	return (str);
+	if (n == NULL && !(i == 0 || i == 2))
+		return (ptr);
+	else
+	{
+		num = (unsigned long)n;
+		str = ft_strjoin(ptr, ft_put_hexa(num, 0));
+		return (str);
+	}
 }
 
 char	*ft_put_hexa(unsigned long nbr, int a)
@@ -90,12 +95,4 @@ char	*ft_charjoin(char *str, char c)
 	ptr[i] = 0;
 	free(str);
 	return (ptr);
-}
-
-int		ft_abs(int a)
-{
-	if (a < 0 )
-		return (-a);
-	else
-		return (a);
 }

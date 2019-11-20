@@ -6,7 +6,7 @@
 /*   By: aez-zaou <aez-zaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 14:58:11 by aez-zaou          #+#    #+#             */
-/*   Updated: 2019/11/20 02:58:04 by aez-zaou         ###   ########.fr       */
+/*   Updated: 2019/11/20 17:05:04 by aez-zaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,23 @@ void	ft_putnbr(int n)
 
 int		handling(t_info infos, va_list args)
 {
-	int i;
+	int		i;
+	char	*str;
 
 	i = 0;
 	if (infos.conversion == 's')
 		i += ft_string(infos, args);
 	else if (infos.conversion == '%')
-		i += ft_char(infos, args);
+		i += ft_percent(infos);
 	else if (infos.conversion == 'c')
 		i += ft_char(infos, args);
 	else if (infos.conversion == 'd' || infos.conversion == 'i')
-		i += ft_decimal(infos, args);
+	{
+		str = ft_decimal(infos, args);
+		ft_putstr(str);
+		i += ft_strlen(str);
+		free(str);
+	}
 	else if (infos.conversion == 'u')
 		i += ft_unsigned(infos, args);
 	else if (infos.conversion == 'p')
