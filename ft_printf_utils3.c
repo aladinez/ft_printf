@@ -6,7 +6,7 @@
 /*   By: aez-zaou <aez-zaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 14:01:19 by aez-zaou          #+#    #+#             */
-/*   Updated: 2019/11/19 01:48:35 by aez-zaou         ###   ########.fr       */
+/*   Updated: 2019/11/20 03:46:52 by aez-zaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,21 @@ int		ft_decimal(t_info infos, va_list args)
 	char	*ptr;
 	int		len;
 
-	len = ft_strcpy(&str, ft_itoa(va_arg(args, int)), 1);
+	len = ft_strcpy(&str, ft_itoa((long long)va_arg(args, int)), 1);
 	if (*str == '0' && infos.precision == 0)
 	{
 		free(str);
 		str = ft_calloc(1,1);
 	}
-	if (infos.precision > 0 && infos.precision > len)
+	if (infos.precision > 0 && infos.precision >= len)
 	{
 		if (*str == '-')
 		{
 			ptr = ft_calloc(2, 1);
 			ptr[0] = '-';
 			str = ft_substr(str, 1, ft_strlen(str) - 1);
+			if (infos.point == 0)
+				len++;
 			str = ft_strjoin(ft_space(infos.precision - len + 2, '0'), str);
 			str = ft_strjoin(ptr, str);
 		}
@@ -50,9 +52,9 @@ int		ft_decimal(t_info infos, va_list args)
 	return (len);
 }
 
-void	fill(char *str, int dim, int n)
+void	fill(char *str, int dim, long long n)
 {
-	unsigned int n2;
+	long long n2;
 
 	n2 = 0;
 	if (n < 0)
@@ -80,18 +82,18 @@ char	*zero(void)
 	return (str);
 }
 
-int		count(int dim, unsigned int n1)
+int		count(int dim, long long n1)
 {
 	while (n1 /= 10)
 		dim++;
 	return (dim);
 }
 
-char	*ft_itoa(int n)
+char	*ft_itoa(long long n)
 {
-	unsigned int	n1;
-	int				dim;
-	char			*str;
+	long long	n1;
+	int			dim;
+	char		*str;
 
 	if (n == 0)
 	{

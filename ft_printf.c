@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aez-zaou <aez-zaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/12 22:21:15 by aez-zaou          #+#    #+#             */
-/*   Updated: 2019/11/17 20:14:58 by aez-zaou         ###   ########.fr       */
+/*   Created: 2019/11/19 02:41:54 by aez-zaou          #+#    #+#             */
+/*   Updated: 2019/11/20 03:38:42 by aez-zaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int		get_info(const char *fmt, t_info *infos, va_list args)
 	int a;
 	int i;
 	int x;
+	// int y;/
 
 	i = 0;
 	a = 0;
@@ -56,6 +57,7 @@ int		get_info(const char *fmt, t_info *infos, va_list args)
 	{
 		a = va_arg(args, int);
 		infos->sign = a > 0 ? 0 : 1;
+
 	}
 	infos->width = ft_abs(a);
 	
@@ -67,11 +69,19 @@ int		get_info(const char *fmt, t_info *infos, va_list args)
 		if ((*fmt == '*') && (*fmt++) && ++i)
 			a = va_arg(args, int);
 		infos->precision = a;
+		// if (x)
+		// 	infos->point = 1;
 	}
-	else if (x)
+	else if (x && a != 0)
 	{
-		infos->precision = infos->width - 1;
+		infos->point = 0;
+		infos->precision = infos->width;
 		infos->width = 0;
+		if(a < 0)
+		{
+			infos->width = infos->precision;
+			infos->precision = -1;
+		}
 	}
 	infos->conversion = *fmt;
 	return (i);
@@ -83,6 +93,7 @@ void	initialise(t_info *infos)
 	infos->width = 0;
 	infos->precision = -1;
 	infos->conversion = 0;
+	infos->point = -1;
 }
 
 char	*ft_calloc(size_t count, size_t size)

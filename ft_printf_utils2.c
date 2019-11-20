@@ -6,7 +6,7 @@
 /*   By: aez-zaou <aez-zaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 21:25:33 by aez-zaou          #+#    #+#             */
-/*   Updated: 2019/11/18 23:28:48 by aez-zaou         ###   ########.fr       */
+/*   Updated: 2019/11/19 21:11:23 by aez-zaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,11 @@ int		ft_string(t_info infos, va_list args)
 
 	len = ft_strcpy(&str, va_arg(args, char*),  0);
 	if (infos.precision == 0)
-		exception(&str);
+	{
+		// exception(&str);
+		free(str);
+		str = ft_calloc(1,1);
+	}
 	else if (infos.precision > 0 && infos.precision < len)
 		str = ft_substr(str, 0, infos.precision);
 	if ((len = ft_strlen(str)) < infos.width)
@@ -40,11 +44,19 @@ int		ft_string(t_info infos, va_list args)
 int		ft_strcpy(char **dst, char *src, int a)
 {
 	int i;
+	char *ptr;
 
+	ptr = "(null)";
+	if (src == NULL)
+	{
+		i = ft_strcpy(dst, ptr, 0);
+		return (i);
+	}
 	i = ft_strlen(src);
 	if (((*dst) = malloc(i * sizeof(char))) == NULL)
 		return (0);
 	i = 0;
+
 	while (src[i] != 0)
 	{
 		(*dst)[i] = src[i];
